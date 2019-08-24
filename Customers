@@ -85,7 +85,20 @@ public class Customers {
 	
 	public void deleteCustomer(int cid) 
 	{
-		
+		try {
+			con = getConnection();
+		    ps = con.prepareStatement("delete from customer where custId=?");
+		    ps.setInt(1, cid);
+		    int i = ps.executeUpdate();
+		    if (i != 0) {
+		        System.out.println("Customer deleted");
+		    } else {
+		        System.out.println("Customer Doesn't Exist");
+		    }
+		    con.close();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
