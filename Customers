@@ -40,7 +40,27 @@ public class Customers {
 	
 	public void getCustomer() 
 	{
-	  
+	  try {
+	   con = getConnection();
+	   st = con.createStatement();
+	   res = st.executeQuery("select * from customer order by custId");
+	   System.out.println("CustId\t CustomerName\t City \t\t Contact No");
+	   System.out.println("-----------------------------------------------------------");
+	  while (res.next()) 
+	  {
+	    System.out.print(res.getInt(1)+"\t");
+	    System.out.print(res.getString(2)+"\t\t");
+	    System.out.print(res.getString(3)+"\t\t");
+	    System.out.println(res.getString(4));
+	  }
+	  System.out.println("-----------------------------------------------------------");
+	  res.close();
+	  con.close();
+	  } 
+	  catch (Exception e) 
+	  {
+	  System.out.println("Error in fetching data" + e);
+	  }
 	}
 	
 	public void updateCustomer(int id,String city) 
