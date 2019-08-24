@@ -16,6 +16,25 @@ public class Customers {
 	}
 	
 	public void insertCustomer(String name, String city, String contact) {
+	try {
+			con = getConnection();
+		    ps = con.prepareStatement("insert into customer values"
+		    		+ "(customer_seq.NEXTVAL,?,?,?)");
+		    ps.setString(1, name);
+		    ps.setString(2, city);
+		    ps.setString(3, contact);
+		   
+		    int i = ps.executeUpdate();
+		    if (i != 0) {
+		        System.out.println("Inserted");
+		    } else {
+		        System.out.println("not Inserted");
+		    }
+		    con.close();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
 		
 		}
 	
