@@ -65,7 +65,22 @@ public class Customers {
 	
 	public void updateCustomer(int id,String city) 
 	{
-		
+		try {
+			 con = getConnection();
+		    ps = con.prepareStatement("update customer"
+		    		+ " set custCity=? where custId=?");
+		    ps.setString(1, city);
+		    ps.setInt(2,id);
+		    int i = ps.executeUpdate();
+		    if (i != 0) {
+		        System.out.println("City updated");
+		    } else {
+		        System.out.println("not updated");
+		    }
+		    con.close();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	}
 	
 	public void deleteCustomer(int cid) 
