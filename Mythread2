@@ -1,0 +1,19 @@
+/*Defining a thread*/
+
+Class Mythread2 extends Thread{
+/* job of the thread*/
+public void run(){
+for(int i=0; i<10; i++){
+System.Out.Println("Child Thread");
+}
+}
+Class MainThread2{
+/* job of main thread*/
+public static void main(String args[ ]){
+Mythread2 mt = new Mythread2(); /* main thread created the child thread*/
+mt.start();
+for(int i=0; i<10; i++){
+System.Out.Print("Main Thread");
+}
+}
+}
