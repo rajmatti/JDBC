@@ -1,22 +1,36 @@
-
-import java.util.Scanner;
 import java.sql.*;
+import java.util.Scanner;
 
 public class Customers {
-	 
+	 Connection con;
+	 Statement st;
+	 ResultSet res;
+	 PreparedStatement ps;
 	 
 	Customers()
 	{
-		
+		con = null;
 	}
 	
 	public Connection getConnection()
 	{
-		
+		 try 
+		  {
+			//load the driver class  
+		  Class.forName("oracle.jdbc.driver.OracleDriver");  
+		  //create  the connection object 
+		  con=DriverManager.getConnection(  
+				  "jdbc:oracle:thin:@localhost:1521:orcl","hr","raj");  
+		  } 
+		  catch (Exception e) 
+		  {
+		  System.out.println("Error in connection" + e);
+		  }
+		 return con;
 	}
 	
 	public void insertCustomer(String name, String city, String contact) {
-	try {
+		try {
 			con = getConnection();
 		    ps = con.prepareStatement("insert into customer values"
 		    		+ "(customer_seq.NEXTVAL,?,?,?)");
@@ -34,7 +48,6 @@ public class Customers {
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
-		
 		
 		}
 	
@@ -68,7 +81,7 @@ public class Customers {
 		try {
 			 con = getConnection();
 		    ps = con.prepareStatement("update customer"
-		    		+ " set custCity=? where custId=?");
+		    		+ " set city=? where custId=?");
 		    ps.setString(1, city);
 		    ps.setInt(2,id);
 		    int i = ps.executeUpdate();
@@ -123,21 +136,21 @@ public class Customers {
 		        String name=s.next();
 		        city=s.next();
 		        String contactno=s.next();
-			c.insertCustomer(name,city,contactno);
-			break;
+			    c.insertCustomer(name,city,contactno);
+			    break;
 		case 2: c.getCustomer();
 				break;
 		case 3: System.out.println("Enter CustomerId & City to be Updated:");
         		cid=s.nextInt();
         		city=s.next();
-			c.updateCustomer(cid,city);
-			break;
+				c.updateCustomer(cid,city);
+				break;
 		case 4: System.out.println("Enter CustomerId  to be Deleted:");
-			cid=s.nextInt();
-			c.deleteCustomer(cid);
-			break;
+				cid=s.nextInt();
+				c.deleteCustomer(cid);
+				break;
 		case 5: System.out.println("Program Terminated");
-		 	System.exit(0);
+		 		System.exit(0);
 		
 		default: System.out.println("Invalid Selection");
 		          break;
